@@ -1,0 +1,2 @@
+./node_modules/.bin/gulp compile
+./node_modules/.bin/mocha --compilers coffee:coffee-script/register spec/*.coffee

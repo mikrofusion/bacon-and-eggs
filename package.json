@@ -1,0 +1,55 @@
+{
+  "name": "bacon-and-eggs",
+  "version": "0.1.0",
+  "author": "Mike Groseclose",
+  "email": "mike.groseclose@gmail.com",
+  "description": "A functional reactive Twitter API client in node",
+  "homepage": "http://github.com/mikegroseclose/bacon-and-eggs",
+  "author": {
+    "name": "Mike Groseclose",
+    "email": "mike.groseclose@gmail.com",
+    "url": "http://mikegroseclose.com"
+  },
+  "keywords": [
+    "twitter",
+    "api",
+    "frp",
+    "functional",
+    "reactive",
+    "bacon",
+    "eggs",
+    "oauth",
+    "stream",
+    "streams"
+  ],
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/mikegroseclose/gulp-regex-replace.git"
+  },
+  "scripts": {
+    "test": "./runtests",
+    "start": "gulp"
+  },
+  "engines": {
+    "node": ">=0.9.0"
+  },
+  "dependencies": {
+    "oauth": "0.9.9",
+    "baconjs": "0.7.16"
+  },
+  "devDependencies": {
+    "gulp": "^3.5.6",
+    "gulp-coffee": "^1.4.3",
+    "gulp-concat": "^2.2.0",
+    "gulp-plumber": "^0.5.6",
+    "gulp-util": "^2.2.14",
+    "coffee-script": "^1.7.1",
+    "mocha": "1.17.1",
+    "chai": "1.9.0"
+  },
+  "licenses": [{
+    "type": "MIT",
+    "url": "http://github.com/mikegroseclose/gulp-regex-replace/raw/master/LICENSE"
+  }]
+}
