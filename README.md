@@ -2,6 +2,8 @@
 
 A functional reactive Twitter API client in node.
 
+Work in progress.
+
 ##
 Running the examples:
 gulp compile && coffee examples/test.coffee --n
