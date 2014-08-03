@@ -2,6 +2,10 @@
 
 A functional reactive Twitter API client in node.
 
+##
+Running the examples:
+gulp compile && coffee examples/test.coffee --n
+
 ## License
 
 [MIT](http://opensource.org/licenses/MIT) © Mike Groseclose
