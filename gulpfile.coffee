@@ -1,17 +1,25 @@
 'use strict'
 
-gulp      = require 'gulp'
-coffee    = require 'gulp-coffee'
-util      = require 'gulp-util'
-plumber   = require 'gulp-plumber'
-concat    = require 'gulp-concat'
-spawn     = require('child_process').spawn
+gulp       = require 'gulp'
+coffee     = require 'gulp-coffee'
+coffeelint = require 'gulp-coffeelint'
+util       = require 'gulp-util'
+plumber    = require 'gulp-plumber'
+concat     = require 'gulp-concat'
+spawn      = require('child_process').spawn
 
 onError = (err) ->
   util.log util.colors.red 'stream error...'
   util.log util.colors.red(JSON.stringify(err))
 
-gulp.task 'compile', ->
+gulp.task 'lint', ->
+  gulp.src 'src/*.coffee'
+    .pipe(coffeelint())
+    .pipe(coffeelint.reporter())
+    .pipe(coffeelint.reporter('fail'))
+    .on 'error', () -> process.exit(1)
+
+gulp.task 'compile', ['lint'], ->
   gulp.src 'src/*.coffee'
     .pipe plumber {errorHandler: onError}
     .pipe coffee bare: true
