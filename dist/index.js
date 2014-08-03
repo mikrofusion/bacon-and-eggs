@@ -1,3 +1,25 @@
+var Bacon;
+
+Bacon = require('baconjs');
+
+exports.TwitterBus1 = function(connection) {
+  return {
+    push: function(data) {
+      return this.onValue(data.method, data.data);
+    },
+    onValue: function(arg) {
+      return console.log('test');
+    }
+  };
+};
+
+exports.TwitterBus = function() {
+  var bus;
+  bus = new Bacon.Bus();
+  bus.onValue(function(val) {});
+  return bus;
+};
+
 var OAuth, TWITTER_OAUTH_ACCESSS, TWITTER_OAUTH_REQUEST;
 
 OAuth = require('oauth');
@@ -6,15 +28,27 @@ TWITTER_OAUTH_REQUEST = 'https://twitter.com/oauth/request_token';
 
 TWITTER_OAUTH_ACCESSS = 'https://twitter.com/oauth/access_token';
 
-exports.TwitterConnection = function(url, key, secret, token, token_secret) {
-  var connection, oauth;
+exports.TwitterConnection = function(url, creds, callback) {
+  var connection, key, oauth, secret, token, token_secret;
+  if (typeof callback !== "function") {
+    throw new Error("TwitterConnection requires a callback");
+  }
+  key = creds.key, secret = creds.secret, token = creds.token, token_secret = creds.token_secret;
   oauth = new OAuth.OAuth(TWITTER_OAUTH_REQUEST, TWITTER_OAUTH_ACCESSS, key, secret, '1.0A', null, 'HMAC-SHA1');
   connection = oauth.get(url, token, token_secret, null);
   connection.end();
-  return connection;
+  return connection.on('response', function(response) {
+    var err;
+    if (response.statusCode !== 200) {
+      err = new Error('TwitterConnection failed with HTTP status ' + response.statusCode);
+      return callback(err, null);
+    } else {
+      return callback(null, Bacon.fromEventTarget(response, 'data'));
+    }
+  });
 };
 
-var Bacon, CARRIAGE_RETURN, bufferToStr, containsCarriageReturn, isComplete, stripCarriageReturn, toJSON;
+var Bacon, CARRIAGE_RETURN, bufferToStr, containsCarriageReturn, isValidJSON, stripCarriageReturn, toJSON;
 
 Bacon = require('baconjs');
 
@@ -36,53 +70,50 @@ bufferToStr = function(buf) {
   return buf + '';
 };
 
-isComplete = function(data) {
-  return data.complete === true;
+isValidJSON = function(str) {
+  var err;
+  try {
+    JSON.parse(str);
+    return true;
+  } catch (_error) {
+    err = _error;
+    return false;
+  }
 };
 
 toJSON = function(str) {
-  var err, json;
-  try {
-    if (str.length > 0) {
-      return json = JSON.parse(str);
-    }
-  } catch (_error) {
-    err = _error;
-    console.log('Failed to parse string: ' + str);
+  if (isValidJSON(str)) {
+    return JSON.parse(str);
+  } else {
     return null;
   }
 };
 
 exports.TwitterStream = function(connection) {
-  var both, complete, data, rawData;
-  rawData = Bacon.fromEventTarget(connection, 'response').flatMap(function(response) {
-    return Bacon.fromEventTarget(response, 'data');
+  var isCompleteStream;
+  isCompleteStream = connection.map(function(data) {
+    return containsCarriageReturn(bufferToStr(data));
   });
-  complete = rawData.map(function(raw) {
-    return containsCarriageReturn(bufferToStr(raw));
-  });
-  both = rawData.zip(complete, function(raw, complete) {
+  return connection.zip(isCompleteStream, function(data, isComplete) {
     return {
-      data: stripCarriageReturn(bufferToStr(raw)),
-      complete: complete
+      data: stripCarriageReturn(bufferToStr(data)),
+      isComplete: isComplete
     };
-  });
-  data = both.scan('', function(prev, chunk) {
-    if ((prev == null) || (prev.data == null) || isComplete(prev)) {
+  }).scan('', function(prev, chunk) {
+    if ((prev == null) || (prev.data == null) || prev.isComplete === true) {
       return {
         data: chunk.data,
-        complete: chunk.complete
+        isComplete: chunk.isComplete
       };
     } else {
       return {
         data: prev.data + chunk.data,
-        complete: chunk.complete
+        isComplete: chunk.isComplete
       };
     }
-  });
-  return data.filter(isComplete).map(function(data) {
+  }).filter(function(data) {
+    return isValidJSON(data.data) && data.isComplete === true;
+  }).map(function(data) {
     return toJSON(data.data);
-  }).filter(function(x) {
-    return x != null;
   });
 };

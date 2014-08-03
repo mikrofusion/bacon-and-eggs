@@ -14,35 +14,31 @@ stripCarriageReturn = (str) ->
 bufferToStr = (buf) ->
   buf + ''
 
-isComplete = (data) ->
-  data.complete is true
+isValidJSON = (str) ->
+  try JSON.parse(str); true catch err then false
 
 toJSON = (str) ->
-  try
-    if str.length > 0
-      json = JSON.parse(str)
-  catch err
-    console.log 'Failed to parse string: ' + str
+  if isValidJSON(str)
+    JSON.parse(str)
+  else
     null
 
 exports.TwitterStream = (connection) ->
 
-  rawData = Bacon.fromEventTarget(connection, 'response').flatMap (response) ->
-    Bacon.fromEventTarget response, 'data'
+  isCompleteStream = connection.map (data) ->
+    containsCarriageReturn bufferToStr(data)
 
-  complete = rawData.map (raw) ->
-    containsCarriageReturn bufferToStr(raw)
-
-  both = rawData.zip complete, (raw, complete) ->
-    { data: stripCarriageReturn(bufferToStr(raw)), complete: complete }
-
-  data = both.scan '', (prev, chunk) ->
-    if not prev? or not prev.data? or isComplete(prev)
-      { data: chunk.data, complete: chunk.complete }
+  connection.zip isCompleteStream, (data, isComplete) ->
+    data: stripCarriageReturn(bufferToStr(data)),
+    isComplete: isComplete
+  .scan '', (prev, chunk) ->
+    if not prev? or not prev.data? or prev.isComplete is true
+      data: chunk.data
+      isComplete: chunk.isComplete
     else
-      { data: prev.data + chunk.data, complete: chunk.complete }
-
-  data.filter(isComplete)
-    .map((data) ->
-      toJSON(data.data))
-    .filter (x) -> x?
+      data: prev.data + chunk.data,
+      isComplete: chunk.isComplete
+  .filter (data) ->
+    isValidJSON(data.data) and data.isComplete is true
+  .map (data) ->
+    toJSON(data.data)
