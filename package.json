@@ -36,7 +36,8 @@
   },
   "dependencies": {
     "oauth": "0.9.9",
-    "baconjs": "0.7.16"
+    "baconjs": "0.7.16",
+    "dotenv": "0.4.0"
   },
   "devDependencies": {
     "gulp": "^3.5.6",
