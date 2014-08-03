@@ -13,7 +13,7 @@ onError = (err) ->
   util.log util.colors.red(JSON.stringify(err))
 
 gulp.task 'lint', ->
-  gulp.src 'src/*.coffee'
+  gulp.src ['src/*.coffee', 'examples/*.coffee']
     .pipe(coffeelint())
     .pipe(coffeelint.reporter())
     .pipe(coffeelint.reporter('fail'))
