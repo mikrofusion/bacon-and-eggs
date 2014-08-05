@@ -8,7 +8,7 @@ A functional reactive Twitter API client in node.
 $ npm install bacon-and-eggs
 ```
 
-### Use
+## Use
 The following shows how to use BaconAndEggs can be used to connect to a Twitter API stream.
 In this example we connect to the statuses_filter stream and look for public tweets containing the string 'funny'.
 

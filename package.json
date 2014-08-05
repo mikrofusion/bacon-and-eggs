@@ -1,6 +1,6 @@
 {
   "name": "bacon-and-eggs",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": "Mike Groseclose",
   "email": "mike.groseclose@gmail.com",
   "description": "A functional reactive Twitter API client in node",
