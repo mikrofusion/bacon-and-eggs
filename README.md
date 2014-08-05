@@ -42,21 +42,21 @@ BaconAndEggs.TwitterConnection request, creds, post_data, (err, connection) ->
 TwitterConnection creates a baconjs EventStream with raw data returned from one of the Twitter API endpoints.
 
 ####Arguments:
-``` request```
+``` request ``` - 
 A BaconAndEggs Streaming Endpoint (see Streaming Endpoints below).
 
-```creds```
+``` creds ``` - 
 An object containing the keys 'key', 'secret', 'token', 'token_secret' with values being your API key, secret, token, and token secret.
 If needed, API credentials can be obtained from https://apps.twitter.com/app/new
 
-```post_data```
+``` post_data ``` - 
 The data to be sent along with your request.  Note: Only applies to get PUT or POST requests.
 
-```callback```
+``` callback ``` - 
 Callback method which will be called when the connection has been made.
-The callback will take two arguments, ```error``` and ```result```.
-```error ```will be an Error object if an error has occured (else null).
-If no errors have occured, ```result``` will be a baconjs stream of data from the connection.
+The callback will take two arguments, ``` error ``` and ``` result ```.
+``` error ```will be an Error object if an error has occured (else null).
+If no errors have occured, ``` result ``` will be a baconjs stream of data from the connection.
 
 #### Response:
 Response is in the form of a callback as specified in the above arguments.
@@ -66,7 +66,7 @@ Response is in the form of a callback as specified in the above arguments.
 TwitterStream takes a TwitterConnection (raw data EventStream) and transforms it into a baconjs EventStream where the values are JSON responses from the Twitter API.
 
 ####Arguments:
-```connection```
+``` connection ``` - 
 A TwitterConnection object.
 
 ####Response:
@@ -81,25 +81,25 @@ are objects with both a 'url' and 'method' key which have been defined in BaconA
 The 'url' value is the API endpoint (e.g. 'https://userstream.twitter.com/1.1/user.json').
 The 'method' value is an HTTP method (either 'get', 'put', 'post', or 'delete').
 
-``` BaconAndEggs.TWITTER_STREAMING_API_GET_USER ```
-GET user
+``` BaconAndEggs.TWITTER_STREAMING_API_GET_USER ``` - GET user
+
 API docs here:  https://dev.twitter.com/docs/api/1.1/get/user
 
-``` BaconAndEggs.TWITTER_STREAMING_API_GET_SITE ```
-GET site
+``` BaconAndEggs.TWITTER_STREAMING_API_GET_SITE ``` - GET site
+
 API docs here: https://dev.twitter.com/docs/api/1.1/get/site
 
-``` BaconAndEggs.TWITTER_STREAMING_API_GET_STATUSES_SAMPLE ```
-GET statuses/sample
+``` BaconAndEggs.TWITTER_STREAMING_API_GET_STATUSES_SAMPLE ``` - GET statuses/sample
+
 API docs here: https://dev.twitter.com/docs/api/1.1/get/statuses/sample
 
-``` BaconAndEggs.TWITTER_STREAMING_API_GET_STATUSES_FIREHOSE ```
-GET statuses/firehose
+``` BaconAndEggs.TWITTER_STREAMING_API_GET_STATUSES_FIREHOSE ``` - GET statuses/firehose
+
 API docs here: https://dev.twitter.com/docs/api/1.1/get/statuses/firehose
 NOTE: This endpoint requires special permission to access.
 
-``` BaconAndEggs.TWITTER_STREAMING_API_POST_STATUSES_FILTER ```
-POST statuses/filter
+``` BaconAndEggs.TWITTER_STREAMING_API_POST_STATUSES_FILTER ``` - POST statuses/filter
+
 API docs here: https://dev.twitter.com/docs/api/1.1/post/statuses/filter
 NOTE: At least one predicate parameter (follow, locations, or track) must be specified in the POST body.
 
@@ -123,9 +123,9 @@ creds =
 ```
 
 Prior to running the examples, either export your twitter key, secret, token, and token_secret via the command line OR
-put a ```.env``` file at the root of the project with the values to be exported.
+put a ``` .env ``` file at the root of the project with the values to be exported.
 
-Example ```.env``` file:
+Example ``` .env ``` file:
 ```
 TWITTER_USER_KEY=YOUR-USER-KEY-HERE
 TWITTER_USER_SECRET=YOUR-USER-SECRET-HERE
