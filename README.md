@@ -1,4 +1,4 @@
-bacon-and-eggs
+#bacon-and-eggs
 ####
 [![NPM](https://nodei.co/npm/bacon-and-eggs.png)](https://nodei.co/npm/bacon-and-eggs/)
 
