@@ -1,5 +1,5 @@
 #bacon-and-eggs
-####
+
 [![NPM](https://nodei.co/npm/bacon-and-eggs.png)](https://nodei.co/npm/bacon-and-eggs/)
 
 [![NPM version][npm-image]][npm-url] [![Build Status][travis-image]][travis-url]
