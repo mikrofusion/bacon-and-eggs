@@ -33,12 +33,12 @@ stream.log()
 ## API
 
 ### toEventStream(creds, request)
-####Description:
+#####Description:
 Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the Twitter API.
 See the bacon.js [documentation](https://github.com/baconjs/bacon.js/#common-methods-in-eventstreams-and-properties) for a list of methods that can be applied to a bacon.js EventStream.
 
 
-####Arguments:
+#####Arguments:
 ``` creds ``` -
 An object containing the keys 'key', 'secret', 'token', 'token_secret' with values being your API key, secret, token, and token secret.
 If needed, API credentials can be obtained from the [twitter app manager](https://apps.twitter.com/app/new).
@@ -46,40 +46,44 @@ If needed, API credentials can be obtained from the [twitter app manager](https:
 ``` request ``` -
 A request object created from one of the following methods
 
+### request(method, resource, params)
+Returns a reqest object as a request to be performed against the Twitter [REST API](https://dev.twitter.com/docs/api/1.1).
+
+``` method ``` (required) is the HTTP method ('get', 'put', 'post', or 'delete')
+
+``` resource ``` (required) is the REST API resource (e.g. 'user', 'followers/ids', etc)
+
+``` params ``` (optional) are passed as part of the request.
+
 ### requestUserStreaming(params)
 Returns a reqest object as a GET request against the twitter user [Streaming API](https://dev.twitter.com/docs/api/1.1/get/user).
 
 ``` params ``` (optional) are passed as part of the request.
 
-### requestSiteStreaming(params) ```
-Returns a reqest object as a GET request against the twitter site[Streaming API](https://dev.twitter.com/docs/api/1.1/get/site).
+### requestSiteStreaming(params)
+Returns a reqest object as a GET request against the twitter site [Streaming API](https://dev.twitter.com/docs/api/1.1/get/site).
 
 ``` params ``` (optional) are passed as part of the request.
 
-### requestStatusesSampleStreaming(params) ```
+### requestStatusesSampleStreaming(params)
 Returns a reqest object as a GET request against the twitter sample [Streaming API](https://dev.twitter.com/docs/api/1.1/get/statuses/sample).
 
 ``` params ``` (optional) are passed as part of the request.
 
-### requestStatusesFirehoseStreaming(params) ```
+### requestStatusesFirehoseStreaming(params)
 Returns a reqest object as a GET request against the twitter firehose [Streaming API](https://dev.twitter.com/docs/api/1.1/get/statuses/firehose).
 
 Note: This endpoint requires special permission to access.
 
 ``` params ``` (optional) are passed as part of the request.
 
-### requestStatusesFilterStreaming(params) ```
+### requestStatusesFilterStreaming(params)
 Returns a reqest object as a POST request against the twitter filter [Streaming API](https://dev.twitter.com/docs/api/1.1/post/statuses/filter).
 
 ``` params ``` (required) are passed as part of the request.
+
 Note: At least one param (follow, locations, or track) must be specified in the POST body.
 
-### request(method, resource, params) ```
-Returns a reqest object as a request to be performed against the Twitter [REST API](https://dev.twitter.com/docs/api/1.1).
-
-``` method ``` (required) is the HTTP method ('get', 'put', 'post', or 'delete')
-``` resource ``` (required) is the REST API resource (e.g. 'user', 'followers/ids', etc)
-``` params ``` (optional) are passed as part of the request.
 
 ## Examples
 Examples are included in the examples folder.
