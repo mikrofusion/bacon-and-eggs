@@ -48,3 +48,6 @@ connect = (creds, request) ->
           sink data
         response.on 'end', () ->
           sink '\r\n'
+
+if process.env.NODE_ENV == 'TEST'
+  exports.connect = connect

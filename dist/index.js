@@ -113,6 +113,10 @@ connect = function(creds, request) {
   });
 };
 
+if (process.env.NODE_ENV === 'TEST') {
+  exports.connect = connect;
+}
+
 var Bacon, CARRIAGE_RETURN, bufferToStr, containsCarriageReturn, isValidJSON, stream, stripCarriageReturn, toJSON;
 
 Bacon = require('baconjs');
@@ -182,3 +186,7 @@ stream = function(connection) {
     return toJSON(data.data);
   });
 };
+
+if (process.env.NODE_ENV === 'TEST') {
+  exports.stream = stream;
+}

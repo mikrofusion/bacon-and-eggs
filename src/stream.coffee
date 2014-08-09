@@ -43,3 +43,5 @@ stream = (connection) ->
   .map (data) ->
     toJSON(data.data)
 
+if process.env.NODE_ENV == 'TEST'
+  exports.stream = stream

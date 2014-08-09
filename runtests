@@ -1,2 +1,3 @@
 ./node_modules/.bin/gulp compile
+export NODE_ENV=TEST
 ./node_modules/.bin/mocha --compilers coffee:coffee-script/register spec/*.coffee
