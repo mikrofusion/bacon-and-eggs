@@ -47,42 +47,42 @@ A request object created from one of the following methods:
 * ``` requestUserStreaming(params) ```
 GET request against the twitter user streaming API.
 
-``` params ``` (optional) are passed as part of the request.
-For more details see the API:  https://dev.twitter.com/docs/api/1.1/get/user
+  * ``` params ``` (optional) are passed as part of the request.
+  * For more details see the API:  https://dev.twitter.com/docs/api/1.1/get/user
 
 * ``` requestSiteStreaming(params) ```
 GET request against the twitter site streaming API.
 
-``` params ``` (optional) are passed as part of the request.
-For more details see the API: https://dev.twitter.com/docs/api/1.1/get/site
+  * ``` params ``` (optional) are passed as part of the request.
+  * For more details see the API: https://dev.twitter.com/docs/api/1.1/get/site
 
 * ``` requestStatusesSampleStreaming(params) ```
 GET request against the twitter sample streaming API.
 
-``` params ``` (optional) are passed as part of the request.
-For more details see the API: https://dev.twitter.com/docs/api/1.1/get/statuses/sample
+  * ``` params ``` (optional) are passed as part of the request.
+  * For more details see the API: https://dev.twitter.com/docs/api/1.1/get/statuses/sample
 
 * ``` requestStatusesFirehoseStreaming(params) ```
 GET request against the twitter firehose streaming API.
 
-``` params ``` (optional) are passed as part of the request.
-Note: This endpoint requires special permission to access.
-For more details see the API: https://dev.twitter.com/docs/api/1.1/get/statuses/firehose
+  * ``` params ``` (optional) are passed as part of the request.
+  * Note: This endpoint requires special permission to access.
+  * For more details see the API: https://dev.twitter.com/docs/api/1.1/get/statuses/firehose
 
 * ``` requestStatusesFilterStreaming(params) ```
 POST request against the twitter firehose streaming API.
 
-``` params ``` (required) are passed as part of the request.
-Note: At least one param (follow, locations, or track) must be specified in the POST body.
-For more details see the API: https://dev.twitter.com/docs/api/1.1/post/statuses/filter
+  * ``` params ``` (required) are passed as part of the request.
+  * Note: At least one param (follow, locations, or track) must be specified in the POST body.
+  * For more details see the API: https://dev.twitter.com/docs/api/1.1/post/statuses/filter
 
 * ``` request(method, resource, params) ```
 Creates a request to be performed against the Twitter REST API.
 
-``` method ``` (required) is the HTTP method ('get', 'put', 'post', or 'delete')
-``` resource ``` (required) is the REST API resource (e.g. 'user', 'followers/ids', etc)
-``` params ``` (optional) are passed as part of the request.
-For more details see the API:  https://dev.twitter.com/docs/api/1.1
+  * ``` method ``` (required) is the HTTP method ('get', 'put', 'post', or 'delete')
+  * ``` resource ``` (required) is the REST API resource (e.g. 'user', 'followers/ids', etc)
+  * ``` params ``` (optional) are passed as part of the request.
+  * For more details see the API:  https://dev.twitter.com/docs/api/1.1
 
 #### Response:
 The return value is a bacon.js EventStream containing JSON responses from the Twitter API.
