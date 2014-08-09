@@ -23,7 +23,7 @@ toJSON = (str) ->
   else
     null
 
-exports.TwitterStream = (connection) ->
+stream = (connection) ->
 
   isCompleteStream = connection.map (data) ->
     containsCarriageReturn bufferToStr(data)
