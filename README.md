@@ -115,7 +115,7 @@ TWITTER_USER_TOKEN=YOUR-USER-TOKEN-HERE
 TWITTER_USER_TOKEN_SECRET=YOUR-USER-TOKEN-SECRET-HERE
 ```
 
-## License
+# License
 
 [MIT](http://opensource.org/licenses/MIT) © Mike Groseclose
 
