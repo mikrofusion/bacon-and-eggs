@@ -49,7 +49,6 @@ The REST API resource (e.g. 'user', 'followers/ids', etc)
 ``` params (optional) ``` -
 Request parameters.
 
-
 ### toEventStream(creds, streamingEndpoint, params)
 ####Description:
 Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the one of the TWitter Streaming APIs (indicated by the streamingEndpoint parameter).
@@ -78,11 +77,11 @@ The streaming endpoints below define the set of streaming API endpoints availabl
 
 ``` BaconAndEggs.TWITTER_STREAMING_API_GET_STATUSES_FIREHOSE ``` - [GET statuses/firehose](https://dev.twitter.com/docs/api/1.1/get/statuses/firehose).
 
-Note: This endpoint requires special permission to access.
+  * Note: This endpoint requires special permission to access.
 
 ``` BaconAndEggs.TWITTER_STREAMING_API_POST_STATUSES_FILTER ``` - [POST statuses/filter](https://dev.twitter.com/docs/api/1.1/post/statuses/filter).
 
-Note: At least one param (follow, locations, or track) must be specified in the POST body.
+  * Note: At least one param (follow, locations, or track) must be specified in the POST body.
 
 
 ## Examples
