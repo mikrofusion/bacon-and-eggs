@@ -5,7 +5,7 @@ EventEmitter = require('events').EventEmitter
 
 Bacon = require 'baconjs'
 
-describe 'TwitterStream', ->
+describe 'stream', ->
   response = undefined
   eventEmitter = null
 
@@ -16,7 +16,7 @@ describe 'TwitterStream', ->
     eventEmitter = new EventEmitter()
     stream = Bacon.fromEventTarget(eventEmitter, 'data')
 
-    BaconAndEggs.TwitterStream(stream).onValue (val) ->
+    BaconAndEggs.stream(stream).onValue (val) ->
       response = val
 
   describe 'when the response is complete (contains a carriage return)', ->

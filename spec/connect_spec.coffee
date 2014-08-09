@@ -17,11 +17,11 @@ creds =
   key: 'foo'
   secret: 'bar'
   token: 'biz'
-  token_secret: 'baz'
+  tokenSecret: 'baz'
 statusCode = 200
 post_data = null
 
-describe 'TwitterConnection', ->
+describe 'connect', ->
   beforeEach ->
     oauthSpy = sinon.stub OAuth, 'OAuth'
     oauth =
@@ -38,96 +38,93 @@ describe 'TwitterConnection', ->
     oauthSpy.restore()
 
   describe 'when a url and method are NOT given', ->
-      expect(-> new BaconAndEggs.TwitterConnection(null, creds, null, ->))
-        .to.throw('TwitterConnection request obj must include url and method')
+    it 'throws an error', ->
+      expect(-> BaconAndEggs.connect(creds, null))
+        .to.throw('request obj must include url and method')
 
   describe 'when a method is given but NOT a "get", "put", "post", or "delete"', ->
-      expect(-> new BaconAndEggs.TwitterConnection({url:request.url, method:'blah'}, creds, null, ->))
-        .to.throw('TwitterConnection given an invalid http method')
-
-  describe 'when a key, secret, token, and token_secret are NOT given', ->
-      expect(-> new BaconAndEggs.TwitterConnection(request, null, null, ->))
-        .to.throw('TwitterConnection creds obj must include key, method, token, and token_secret')
-
-  describe 'when a callback function is NOT given', ->
     it 'throws an error', ->
-      expect(-> new BaconAndEggs.TwitterConnection(request, creds, null, null))
-        .to.throw('TwitterConnection requires a callback')
+      expect(-> BaconAndEggs.connect(creds, {url:request.url, method:'blah'}))
+        .to.throw('given an invalid http method')
 
+  describe 'when a key, secret, token, and tokenSecret are NOT given', ->
+    it 'throws an error', ->
+      expect(-> new BaconAndEggs.connect(null, null))
+        .to.throw('creds must include key, method, token, and tokenSecret')
 
-    describe 'when a url, token, and token secret are given', ->
-      beforeEach ->
-        connectionSpy = sinon.stub oauth, request.method
-        connectionSpy.returns {
-          end: ->
-          on: (event, callback) ->
-            callback { statusCode: statusCode }
-        }
+  describe 'when a url, token, and token secret are given', ->
+    beforeEach ->
+      connectionSpy = sinon.stub oauth, request.method
+      connectionSpy.returns {
+        end: ->
+        on: (event, callback) ->
+          callback { statusCode: statusCode }
+      }
 
-        new BaconAndEggs.TwitterConnection request, creds, post_data, (err, result) ->
-          resultError = err
-          resultStream = result
+      BaconAndEggs.connect creds, request
 
-      afterEach ->
-        connectionSpy.restore()
+    afterEach ->
+      connectionSpy.restore()
 
-      describe 'and a key and secret are given', ->
-        it 'creates a new oauth object with the given key and secret', ->
-          expect(oauthSpy.lastCall.args[2]).to.equal creds.key
-          expect(oauthSpy.lastCall.args[3]).to.equal creds.secret
+    describe 'and a key and secret are given', ->
+      it 'creates a new oauth object with the given key and secret', ->
+        expect(oauthSpy.lastCall.args[2]).to.equal creds.key
+        expect(oauthSpy.lastCall.args[3]).to.equal creds.secret
 
-      describe 'when method is a get', ->
+    describe 'when method is a get', ->
+      describe 'when no params or contentType are given', ->
         before ->
           request.method = 'get'
 
-        it 'does a get request against the oauth object with the given url, token, and token_secret', ->
-          expect(connectionSpy.calledWith(request.url, creds.token, creds.token_secret, null)).to.equal true
+        it 'does a get request against the oauth object with the given url, token, and tokenSecret', ->
+          expect(connectionSpy.calledWith(request.url, creds.token, creds.tokenSecret, null)).to.equal true
 
-      describe 'when method is a put', ->
-        before ->
-          post_data =
-            content_type: 'application/json'
-            body: 'bar'
+      describe 'when a params is given with a contentType', ->
+        # TODO
 
-          request.method = 'put'
+      describe 'when a params is given with no contentType', ->
+        # TODO
 
-        it 'does a put request against the oauth object with the given url, token, and token_secret', ->
-          expect(connectionSpy.calledWith(request.url, creds.token, creds.token_secret, post_data.body, post_data.content_type, null)).to.equal true
-
-      describe 'when method is a post', ->
-        before ->
-          post_data =
-            content_type: 'application/x-www-form-urlencoded'
-            body: 'foo'
-
-          request.method = 'post'
-
-        it 'does a post request against the oauth object with the given url, token, and token_secret', ->
-          expect(connectionSpy.calledWith(request.url, creds.token, creds.token_secret, post_data.body, post_data.content_type, null)).to.equal true
-
-      describe 'when method is a delete', ->
+    describe 'when method is a delete', ->
+      describe 'when no params or contentType are given', ->
         before ->
           request.method = 'delete'
 
-        it 'does a delete request against the oauth object with the given url, token, and token_secret', ->
-          expect(connectionSpy.calledWith(request.url, creds.token, creds.token_secret, null)).to.equal true
+        it 'does a delete request against the oauth object with the given url, token, and tokensecret', ->
+          expect(connectionSpy.calledWith(request.url, creds.token, creds.tokenSecret, null)).to.equal true
 
-      describe 'when the response gives a status code other than 200', ->
-        before ->
-          statusCode = 403
+      describe 'when a params is given with a contentType', ->
+        # TODO
 
-        it 'the callback error is an Error object', ->
-          expect(resultError.message).to.equal (new Error 'TwitterConnection failed with HTTP status 403').message
+      describe 'when a params is given with no contentType', ->
+        # TODO
 
-        it 'the callback response is null', ->
-          expect(resultStream).to.equal null
+    describe 'when method is a put', ->
+      before ->
+        request.method = 'put'
+        request.params = 'bar'
+        request.contentType = 'application/json'
 
-      describe 'when the response gives a status code of 200', ->
-        before ->
-          statusCode = 200
+      it 'does a put request against the oauth object with the given url, token, and tokenSecret', ->
+        expect(connectionSpy.calledWith(request.url, creds.token, creds.tokenSecret, request.params, request.contentType, null)).to.equal true
 
-        it 'the callback err is null', ->
-          expect(resultError).to.equal null
+    describe 'when method is a post', ->
+      before ->
+        request.method = 'post'
+        request.params = 'foo'
+        request.contentType = 'application/x-www-form-urlencoded'
 
-        it 'the callback response is an EventStream object', ->
-          expect(resultStream.constructor.name).to.equal 'EventStream'
+      it 'does a post request against the oauth object with the given url, token, and tokenSecret', ->
+        expect(connectionSpy.calledWith(request.url, creds.token, creds.tokenSecret, request.params, request.contentType, null)).to.equal true
+
+    describe 'when the response gives a status code other than 200', ->
+      before ->
+        statusCode = 403
+
+      # TODO
+
+    describe 'when the response gives a status code of 200', ->
+      before ->
+        statusCode = 200
+
+      # TODO
