@@ -51,7 +51,7 @@ Request parameters.
 
 ### toEventStream(creds, streamingEndpoint, params)
 #####Description:
-Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the one of the TWitter Streaming APIs (indicated by the streamingEndpoint parameter).
+Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the one of the Twitter Streaming APIs (indicated by the streamingEndpoint parameter).
 See the bacon.js [documentation](https://github.com/baconjs/bacon.js/#common-methods-in-eventstreams-and-properties) for a list of methods that can be applied to a bacon.js EventStream.
 
 #####Arguments:
