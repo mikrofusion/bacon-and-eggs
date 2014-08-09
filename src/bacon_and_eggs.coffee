@@ -1,4 +1,4 @@
-# API docs here:  https://dev.twitter.com/docs/api/1.1/get/user
+# API:  https://dev.twitter.com/docs/api/1.1/get/user
 exports.requestUserStreaming = (params) ->
   {
     url: 'https://userstream.twitter.com/1.1/user.json'
@@ -6,7 +6,7 @@ exports.requestUserStreaming = (params) ->
     params: params
   }
 
-# API docs here: https://dev.twitter.com/docs/api/1.1/get/site
+# API: https://dev.twitter.com/docs/api/1.1/get/site
 exports.requestSiteStreaming = (params) ->
   {
     url: 'https://sitestream.twitter.com/1.1/site.json'
@@ -14,7 +14,7 @@ exports.requestSiteStreaming = (params) ->
     params: params
   }
 
-# API docs here: https://dev.twitter.com/docs/api/1.1/get/statuses/sample
+# API: https://dev.twitter.com/docs/api/1.1/get/statuses/sample
 exports.requestStatusesSampleStreaming = (params) ->
   {
     url: 'https://stream.twitter.com/1.1/statuses/sample.json'
@@ -22,7 +22,7 @@ exports.requestStatusesSampleStreaming = (params) ->
     params: params
   }
 
-# API docs here: https://dev.twitter.com/docs/api/1.1/get/statuses/firehose
+# API: https://dev.twitter.com/docs/api/1.1/get/statuses/firehose
 # NOTE: This endpoint requires special permission to access.
 exports.requestStatusesFirehoseStreaming = (params) ->
   {
@@ -31,7 +31,7 @@ exports.requestStatusesFirehoseStreaming = (params) ->
     params: params
   }
 
-# API docs here: https://dev.twitter.com/docs/api/1.1/post/statuses/filter
+# API: https://dev.twitter.com/docs/api/1.1/post/statuses/filter
 # NOTE: At least one predicate parameter (follow, locations, or track)
 # must be specified in the POST body.
 exports.requestStatusesFilterStreaming = (params) ->
@@ -41,6 +41,7 @@ exports.requestStatusesFilterStreaming = (params) ->
     params: params
   }
 
+# API:  https://dev.twitter.com/docs/api/1.1
 exports.request = (method, resource, params) ->
   {
     url: "https://api.twitter.com/1.1/#{resource}.json"
