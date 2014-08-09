@@ -34,7 +34,9 @@ stream.log()
 
 ### toEventStream(creds, request)
 ####Description:
-Creates a baconjs EventStrea containing JSON responses from the Twitter API.
+Returns a bacon.js EventStream containing JSON responses from the Twitter API.
+See the bacon.js documentation for a list of methods that can be applied to a bacon.js EventStream:
+https://github.com/baconjs/bacon.js/#common-methods-in-eventstreams-and-properties
 
 ####Arguments:
 ``` creds ``` -
@@ -83,11 +85,6 @@ Creates a request to be performed against the Twitter REST API.
   * ``` resource ``` (required) is the REST API resource (e.g. 'user', 'followers/ids', etc)
   * ``` params ``` (optional) are passed as part of the request.
   * For more details see the API:  https://dev.twitter.com/docs/api/1.1
-
-#### Response:
-The return value is a bacon.js EventStream containing JSON responses from the Twitter API.
-See the bacon.js documentation for a list of methods that can be applied to a bacon.js EventStream:
-https://github.com/baconjs/bacon.js/#common-methods-in-eventstreams-and-properties
 
 
 ## Examples
