@@ -31,9 +31,11 @@ stream.log()
 ```
 ## API
 ### toEventStream(creds, method, resource, params)
+#####Description:
 Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the [Twitter REST API](https://dev.twitter.com/docs/api/1.1).
 See the bacon.js [documentation](https://github.com/baconjs/bacon.js/#common-methods-in-eventstreams-and-properties) for a list of methods that can be applied to a bacon.js EventStream.
 
+####Arguments:
 ``` creds ``` -
 An object containing the keys 'key', 'secret', 'token', 'token_secret' with values being your API key, secret, token, and token secret.
 If needed, API credentials can be obtained from the [twitter app manager](https://apps.twitter.com/app/new).
@@ -49,9 +51,11 @@ Request parameters.
 
 
 ### toEventStream(creds, streamingEndpoint, params)
+#####Description:
 Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the one of the TWitter Streaming APIs (indicated by the streamingEndpoint parameter).
 See the bacon.js [documentation](https://github.com/baconjs/bacon.js/#common-methods-in-eventstreams-and-properties) for a list of methods that can be applied to a bacon.js EventStream.
 
+####Arguments:
 ``` creds ``` -
 An object containing the keys 'key', 'secret', 'token', 'token_secret' with values being your API key, secret, token, and token secret.
 If needed, API credentials can be obtained from the [twitter app manager](https://apps.twitter.com/app/new).
