@@ -23,7 +23,7 @@ toJSON = (str) ->
   else
     null
 
-stream = (connection) ->
+exports.stream = (connection) ->
 
   isCompleteStream = connection.map (data) ->
     containsCarriageReturn bufferToStr(data)
