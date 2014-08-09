@@ -7,8 +7,12 @@
 BaconAndEggs = require('../dist/index.js')
 creds = require('./helper.coffee').creds
 
-stream = BaconAndEggs.toEventStream creds,
- BaconAndEggs.request 'get', 'search/tweets', { q: 'funny' }
+stream = BaconAndEggs.toEventStream(
+  creds,
+  'get',
+  'search/tweets',
+  { q: 'funny' }
+)
 
 stream.onError (response) ->
   console.log 'Error:', response

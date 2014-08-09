@@ -23,7 +23,7 @@ toJSON = (str) ->
   else
     null
 
-exports.stream = (connection) ->
+stream = (connection) ->
 
   isCompleteStream = connection.map (data) ->
     containsCarriageReturn bufferToStr(data)
@@ -42,3 +42,4 @@ exports.stream = (connection) ->
     isValidJSON(data.data) and data.isComplete is true
   .map (data) ->
     toJSON(data.data)
+

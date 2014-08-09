@@ -30,58 +30,53 @@ stream = BaconAndEggs.toEventStream(creds, request)
 stream.log()
 ```
 ## API
-### toEventStream(creds, request)
-Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the Twitter API.
+### toEventStream(creds, method, resource, params)
+Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the [Twitter REST API](https://dev.twitter.com/docs/api/1.1).
 See the bacon.js [documentation](https://github.com/baconjs/bacon.js/#common-methods-in-eventstreams-and-properties) for a list of methods that can be applied to a bacon.js EventStream.
 
 ``` creds ``` -
 An object containing the keys 'key', 'secret', 'token', 'token_secret' with values being your API key, secret, token, and token secret.
 If needed, API credentials can be obtained from the [twitter app manager](https://apps.twitter.com/app/new).
 
-``` request ``` -
-A request object created from one of the request* methods below.
+``` method ``` -
+The HTTP method ('get', 'put', 'post', or 'delete')
 
-### request(method, resource, params)
-Returns a reqest object indicating a request should be performed against the [Twitter REST API](https://dev.twitter.com/docs/api/1.1).
-This object should be used as an input into the ``` toEventStream ``` method.
+``` resource ``` -
+The REST API resource (e.g. 'user', 'followers/ids', etc)
 
-``` method ``` (required) is the HTTP method ('get', 'put', 'post', or 'delete')
+``` params (optional) ``` -
+Request parameters.
 
-``` resource ``` (required) is the REST API resource (e.g. 'user', 'followers/ids', etc)
 
-``` params ``` (optional) are passed as part of the request.
+### toEventStream(creds, streamingEndpoint, params)
+Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the one of the TWitter Streaming APIs (indicated by the streamingEndpoint parameter).
+See the bacon.js [documentation](https://github.com/baconjs/bacon.js/#common-methods-in-eventstreams-and-properties) for a list of methods that can be applied to a bacon.js EventStream.
 
-### requestUserStreaming(params)
-Returns a reqest object indicating a GET request should be done against the [Twitter User Streaming API](https://dev.twitter.com/docs/api/1.1/get/user).
-This object should be used as an input into the ``` toEventStream ``` method.
+``` creds ``` -
+An object containing the keys 'key', 'secret', 'token', 'token_secret' with values being your API key, secret, token, and token secret.
+If needed, API credentials can be obtained from the [twitter app manager](https://apps.twitter.com/app/new).
 
-``` params ``` (optional) are passed as part of the request.
+``` streamingEndpoint ``` -
+A BaconAndEggs Streaming Endpoint (see Streaming Endpoints below).
 
-### requestSiteStreaming(params)
-Returns a reqest object indicating a GET request should be done against the [Twitter Site Streaming API](https://dev.twitter.com/docs/api/1.1/get/site).
-This object should be used as an input into the ``` toEventStream ``` method.
+``` params (optional) ``` -
+Request parameters.
 
-``` params ``` (optional) are passed as part of the request.
+### Streaming Endpoints
 
-### requestStatusesSampleStreaming(params)
-Returns a reqest object indicating a GET request should be done against the [Twitter Sample Streaming API](https://dev.twitter.com/docs/api/1.1/get/statuses/sample).
-This object should be used as an input into the ``` toEventStream ``` method.
+The streaming endpoints below define the set of streaming API endpoints available to us via Twitter.
 
-``` params ``` (optional) are passed as part of the request.
+``` BaconAndEggs.TWITTER_STREAMING_API_GET_USER ``` - [GET user](https://dev.twitter.com/docs/api/1.1/get/user).
 
-### requestStatusesFirehoseStreaming(params)
-Returns a reqest object indicating a GET request should be done against the [Twitter Firehose Streaming API](https://dev.twitter.com/docs/api/1.1/get/statuses/firehose).
-This object should be used as an input into the ``` toEventStream ``` method.
+``` BaconAndEggs.TWITTER_STREAMING_API_GET_SITE ``` - [GET site](https://dev.twitter.com/docs/api/1.1/get/site).
 
-``` params ``` (optional) are passed as part of the request.
+``` BaconAndEggs.TWITTER_STREAMING_API_GET_STATUSES_SAMPLE ``` - [GET statuses/sample](https://dev.twitter.com/docs/api/1.1/get/statuses/sample).
+
+``` BaconAndEggs.TWITTER_STREAMING_API_GET_STATUSES_FIREHOSE ``` - [GET statuses/firehose](https://dev.twitter.com/docs/api/1.1/get/statuses/firehose).
 
 Note: This endpoint requires special permission to access.
 
-### requestStatusesFilterStreaming(params)
-Returns a reqest object indicating a POST request should be done against the [Twitter Filter Streaming API](https://dev.twitter.com/docs/api/1.1/post/statuses/filter).
-This object should be used as an input into the ``` toEventStream ``` method.
-
-``` params ``` (required) are passed as part of the request.
+``` BaconAndEggs.TWITTER_STREAMING_API_POST_STATUSES_FILTER ``` - [POST statuses/filter](https://dev.twitter.com/docs/api/1.1/post/statuses/filter).
 
 Note: At least one param (follow, locations, or track) must be specified in the POST body.
 

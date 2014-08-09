@@ -4,7 +4,7 @@ querystring = require 'querystring'
 TWITTER_OAUTH_REQUEST = 'https://twitter.com/oauth/request_token'
 TWITTER_OAUTH_ACCESSS = 'https://twitter.com/oauth/access_token'
 
-exports.connect = (creds, request) ->
+connect = (creds, request) ->
   { key, secret, token, tokenSecret } = creds if creds?
 
   if !key? || !secret? || !token? || !tokenSecret?

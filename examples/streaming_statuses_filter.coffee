@@ -7,8 +7,11 @@
 BaconAndEggs = require '../dist/index.js'
 creds = require('./helper.coffee').creds
 
-stream = BaconAndEggs.toEventStream creds,
-  BaconAndEggs.requestStatusesFilterStreaming { track: 'funny' }
+stream = BaconAndEggs.toEventStream(
+  creds
+  BaconAndEggs.TWITTER_STREAMING_API_POST_STATUSES_FILTER
+  { track: 'funny' }
+)
 
 stream.onError (response) ->
   console.log 'Error:', response
