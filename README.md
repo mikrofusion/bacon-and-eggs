@@ -42,7 +42,8 @@ If needed, API credentials can be obtained from the [twitter app manager](https:
 A request object created from one of the request* methods below.
 
 ## request(method, resource, params)
-Returns a reqest object as a request to be performed against the Twitter [REST API](https://dev.twitter.com/docs/api/1.1).
+Returns a reqest object indicating a request should be performed against the Twitter [REST API](https://dev.twitter.com/docs/api/1.1).
+This object should be used as an input into the ``` toEventStream ``` method.
 
 ``` method ``` (required) is the HTTP method ('get', 'put', 'post', or 'delete')
 
@@ -51,29 +52,34 @@ Returns a reqest object as a request to be performed against the Twitter [REST A
 ``` params ``` (optional) are passed as part of the request.
 
 ## requestUserStreaming(params)
-Returns a reqest object as a GET request against the twitter user [Streaming API](https://dev.twitter.com/docs/api/1.1/get/user).
+Returns a reqest object indicating a GET request should be done against the twitter user [Streaming API](https://dev.twitter.com/docs/api/1.1/get/user).
+This object should be used as an input into the ``` toEventStream ``` method.
 
 ``` params ``` (optional) are passed as part of the request.
 
 ## requestSiteStreaming(params)
-Returns a reqest object as a GET request against the twitter site [Streaming API](https://dev.twitter.com/docs/api/1.1/get/site).
+Returns a reqest object indicating a GET request should be done against the twitter site [Streaming API](https://dev.twitter.com/docs/api/1.1/get/site).
+This object should be used as an input into the ``` toEventStream ``` method.
 
 ``` params ``` (optional) are passed as part of the request.
 
 ## requestStatusesSampleStreaming(params)
-Returns a reqest object as a GET request against the twitter sample [Streaming API](https://dev.twitter.com/docs/api/1.1/get/statuses/sample).
+Returns a reqest object indicating a GET request should be done against the twitter sample [Streaming API](https://dev.twitter.com/docs/api/1.1/get/statuses/sample).
+This object should be used as an input into the ``` toEventStream ``` method.
 
 ``` params ``` (optional) are passed as part of the request.
 
 ## requestStatusesFirehoseStreaming(params)
-Returns a reqest object as a GET request against the twitter firehose [Streaming API](https://dev.twitter.com/docs/api/1.1/get/statuses/firehose).
+Returns a reqest object indicating a GET request should be done against the twitter firehose [Streaming API](https://dev.twitter.com/docs/api/1.1/get/statuses/firehose).
+This object should be used as an input into the ``` toEventStream ``` method.
 
 Note: This endpoint requires special permission to access.
 
 ``` params ``` (optional) are passed as part of the request.
 
 ## requestStatusesFilterStreaming(params)
-Returns a reqest object as a POST request against the twitter filter [Streaming API](https://dev.twitter.com/docs/api/1.1/post/statuses/filter).
+Returns a reqest object indicating a POST request should be done against the twitter filter [Streaming API](https://dev.twitter.com/docs/api/1.1/post/statuses/filter).
+This object should be used as an input into the ``` toEventStream ``` method.
 
 ``` params ``` (required) are passed as part of the request.
 
