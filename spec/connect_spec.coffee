@@ -7,19 +7,20 @@ sinon = require 'sinon'
 oauth = undefined
 oauthSpy = undefined
 connectionSpy = undefined
-resultStream = undefined
-resultError = undefined
+responseStream = undefined
 
 request =
   url: 'url'
   method: 'get'
+  params: undefined
+
 creds =
   key: 'foo'
   secret: 'bar'
   token: 'biz'
   tokenSecret: 'baz'
+
 statusCode = 200
-post_data = null
 
 describe 'connect', ->
   beforeEach ->
@@ -58,10 +59,10 @@ describe 'connect', ->
       connectionSpy.returns {
         end: ->
         on: (event, callback) ->
-          callback { statusCode: statusCode }
+          callback { statusCode: statusCode, on: (id, callback) -> }
       }
 
-      BaconAndEggs.connect creds, request
+      responseStream = BaconAndEggs.connect creds, request
 
     afterEach ->
       connectionSpy.restore()
@@ -72,32 +73,41 @@ describe 'connect', ->
         expect(oauthSpy.lastCall.args[3]).to.equal creds.secret
 
     describe 'when method is a get', ->
+      before ->
+        request.method = 'get'
+
       describe 'when no params or contentType are given', ->
         before ->
-          request.method = 'get'
+          request.params = undefined
 
         it 'does a get request against the oauth object with the given url, token, and tokenSecret', ->
           expect(connectionSpy.calledWith(request.url, creds.token, creds.tokenSecret, null)).to.equal true
 
-      describe 'when a params is given with a contentType', ->
-        # TODO
 
-      describe 'when a params is given with no contentType', ->
-        # TODO
+      describe 'when params are given', ->
+        before ->
+          request.params = {biz : 'baz'}
+
+        it 'appends the params to the sent URL', ->
+          expect(connectionSpy.lastCall.args[0]).to.equal 'url?biz=baz'
 
     describe 'when method is a delete', ->
+      before ->
+        request.method = 'delete'
+
       describe 'when no params or contentType are given', ->
         before ->
-          request.method = 'delete'
+          request.params = undefined
 
         it 'does a delete request against the oauth object with the given url, token, and tokensecret', ->
           expect(connectionSpy.calledWith(request.url, creds.token, creds.tokenSecret, null)).to.equal true
 
-      describe 'when a params is given with a contentType', ->
-        # TODO
+      describe 'when params are given', ->
+        before ->
+          request.params = {biz : 'baz'}
 
-      describe 'when a params is given with no contentType', ->
-        # TODO
+        it 'appends the params to the sent URL', ->
+          expect(connectionSpy.lastCall.args[0]).to.equal 'url?biz=baz'
 
     describe 'when method is a put', ->
       before ->
@@ -118,13 +128,21 @@ describe 'connect', ->
         expect(connectionSpy.calledWith(request.url, creds.token, creds.tokenSecret, request.params, request.contentType, null)).to.equal true
 
     describe 'when the response gives a status code other than 200', ->
+      error = null
       before ->
         statusCode = 403
+        responseStream.onError (err) ->
+          error = err
 
-      # TODO
+      it 'returns a stream containing an error', ->
+        expect(error).to.eq 'failed with HTTP status 403'
 
     describe 'when the response gives a status code of 200', ->
+      error = null
       before ->
         statusCode = 200
+        responseStream.onError (err) ->
+          error = err
 
-      # TODO
+      it 'returns a stream wihtout errors', ->
+        expect(error).to.eq null

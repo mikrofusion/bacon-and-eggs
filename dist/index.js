@@ -1,9 +1,9 @@
-var request,
+var parseArgs, request,
   __slice = [].slice;
 
-exports.toEventStream = function() {
-  var args, connection, creds, first, method, params, requestObject, resource, url;
-  creds = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+parseArgs = function() {
+  var args, first, method, params, requestObject, resource, url;
+  args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
   if (args[0].url != null) {
     first = args[0], params = args[1];
     method = first.method, url = first.url;
@@ -16,6 +16,17 @@ exports.toEventStream = function() {
     method = args[0], resource = args[1], params = args[2];
     requestObject = request(method, resource, params);
   }
+  return requestObject;
+};
+
+if (process.env.NODE_ENV === 'TEST') {
+  exports.parseArgs = parseArgs;
+}
+
+exports.toEventStream = function() {
+  var args, connection, creds, requestObject;
+  creds = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+  requestObject = parseArgs.apply(null, args);
   connection = connect(creds, requestObject);
   return stream(connection);
 };

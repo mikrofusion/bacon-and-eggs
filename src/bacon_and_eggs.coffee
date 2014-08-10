@@ -1,4 +1,4 @@
-exports.toEventStream = (creds, args...) ->
+parseArgs = (args...) ->
   if args[0].url?
     [first, params] = args
     { method, url } = first
@@ -6,6 +6,13 @@ exports.toEventStream = (creds, args...) ->
   else
     [ method, resource, params ] = args
     requestObject = request(method, resource, params)
+  requestObject
+
+if process.env.NODE_ENV == 'TEST'
+  exports.parseArgs = parseArgs
+
+exports.toEventStream = (creds, args...) ->
+  requestObject = parseArgs args...
 
   connection = connect(creds, requestObject)
   stream(connection)
