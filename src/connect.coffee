@@ -42,7 +42,13 @@ connect = (creds, request) ->
   Bacon.fromBinder (sink) ->
     connection.on 'response', (response) ->
       if response.statusCode != 200
-        sink new Bacon.Error 'failed with HTTP status ' + response.statusCode
+        error = ''
+        response.on 'data', (data) ->
+          error += data
+        response.on 'end', ->
+          sink new Bacon.Error(
+            "failed with HTTP status #{response.statusCode}: #{error}"
+          )
       else
         response.on 'data', (data) ->
           sink data

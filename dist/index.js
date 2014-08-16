@@ -110,8 +110,15 @@ connect = function(creds, request) {
   connection.end();
   return Bacon.fromBinder(function(sink) {
     return connection.on('response', function(response) {
+      var error;
       if (response.statusCode !== 200) {
-        return sink(new Bacon.Error('failed with HTTP status ' + response.statusCode));
+        error = '';
+        response.on('data', function(data) {
+          return error += data;
+        });
+        return response.on('end', function() {
+          return sink(new Bacon.Error("failed with HTTP status " + response.statusCode + ": " + error));
+        });
       } else {
         response.on('data', function(data) {
           return sink(data);

@@ -135,7 +135,7 @@ describe 'connect', ->
           error = err
 
       it 'returns a stream containing an error', ->
-        expect(error).to.eq 'failed with HTTP status 403'
+        expect(error).to.include 'failed with HTTP status 403'
 
     describe 'when the response gives a status code of 200', ->
       error = null
