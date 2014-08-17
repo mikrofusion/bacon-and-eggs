@@ -59,7 +59,7 @@ describe 'connect', ->
       connectionSpy.returns {
         end: ->
         on: (event, callback) ->
-          callback { statusCode: statusCode, on: (id, callback) -> }
+          callback { statusCode: statusCode, on: (id, callback) -> callback { on: () -> }}
       }
 
       responseStream = BaconAndEggs.connect creds, request
