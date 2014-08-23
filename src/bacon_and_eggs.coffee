@@ -17,6 +17,36 @@ exports.toEventStream = (creds, args...) ->
   connection = connect(creds, requestObject)
   stream(connection)
 
+exports.toRateLimitedEventStream = (creds, args...) ->
+  rateLimitResource =  exports.toEventStream(
+    creds
+    'get'
+    'application/rate_limit_status'
+  )
+
+  rateLimitResource.flatMap (limits) ->
+    rateLimit = limits.resources.application["/application/rate_limit_status"]
+
+    [ method, resource, params ] = args # TODO make sure not streaming api
+
+    resourceId = resource.split('/')[0]
+    resourceLimit = limits.resources[resourceId]["/#{resource}"]
+
+    if rateLimit.remaining > 1 && resourceLimit.remaining > 1
+      exports.toEventStream(creds, args...)
+    else
+      msToNextTryRateLimit = rateLimit.reset * 1000
+      msToNextTryResource =  resourceLimit.reset * 1000
+
+      msMax = Math.max(
+        msToNextTryRateLimit,
+        msToNextTryResource
+      )
+
+      msToNextTry = msMax - new Date().getTime()
+      new Bacon.Error "limit reached, must wait #{msToNextTry}ms"
+
+
 # REST API:  https://dev.twitter.com/docs/api/1.1
 request = (method, resource, params) ->
   {
