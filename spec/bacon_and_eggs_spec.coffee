@@ -62,10 +62,12 @@ describe 'toRateLimitedEventStream', ->
   describe 'when the user is rate limited', ->
     before ->
       rate_limit_remaining = 0
+      rate_limit_reset = 0
 
     it 'returns an error indicating the request has hit its rate limit', ->
       expect(response).to.eq undefined
-      expect(error).to.include 'limit reached'
+      expect(error.message).to.include 'rate limit reached'
+      expect(error.reset).to.be.a 'number'
 
   describe 'when the user is NOT rate limited', ->
     before ->

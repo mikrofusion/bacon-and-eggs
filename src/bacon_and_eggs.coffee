@@ -32,7 +32,7 @@ exports.toRateLimitedEventStream = (creds, args...) ->
     resourceId = resource.split('/')[0]
     resourceLimit = limits.resources[resourceId]["/#{resource}"]
 
-    if rateLimit.remaining > 1 && resourceLimit.remaining > 1
+    if rateLimit.remaining > 0 && resourceLimit.remaining > 0
       exports.toEventStream(creds, args...)
     else
       msToNextTryRateLimit = rateLimit.reset * 1000
@@ -44,7 +44,10 @@ exports.toRateLimitedEventStream = (creds, args...) ->
       )
 
       msToNextTry = msMax - new Date().getTime()
-      new Bacon.Error "limit reached, must wait #{msToNextTry}ms"
+      new Bacon.Error(
+        message: 'rate limit reached'
+        reset: msToNextTry
+      )
 
 
 # REST API:  https://dev.twitter.com/docs/api/1.1

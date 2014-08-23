@@ -41,14 +41,17 @@ exports.toRateLimitedEventStream = function() {
     method = args[0], resource = args[1], params = args[2];
     resourceId = resource.split('/')[0];
     resourceLimit = limits.resources[resourceId]["/" + resource];
-    if (rateLimit.remaining > 1 && resourceLimit.remaining > 1) {
+    if (rateLimit.remaining > 0 && resourceLimit.remaining > 0) {
       return exports.toEventStream.apply(exports, [creds].concat(__slice.call(args)));
     } else {
       msToNextTryRateLimit = rateLimit.reset * 1000;
       msToNextTryResource = resourceLimit.reset * 1000;
       msMax = Math.max(msToNextTryRateLimit, msToNextTryResource);
       msToNextTry = msMax - new Date().getTime();
-      return new Bacon.Error("limit reached, must wait " + msToNextTry + "ms");
+      return new Bacon.Error({
+        message: "rate limit reached, must wait " + msToNextTry + "ms",
+        reset: msToNextTry
+      });
     }
   });
 };
@@ -156,15 +159,6 @@ connect = function(creds, request) {
 if (process.env.NODE_ENV === 'TEST') {
   exports.connect = connect;
 }
-
-require('dotenv').load();
-
-exports.creds = {
-  key: process.env.TWITTER_USER_KEY,
-  secret: process.env.TWITTER_USER_SECRET,
-  token: process.env.TWITTER_USER_TOKEN,
-  tokenSecret: process.env.TWITTER_USER_TOKEN_SECRET
-};
 
 var Bacon, CARRIAGE_RETURN, bufferToStr, containsCarriageReturn, isValidJSON, stream, stripCarriageReturn, toJSON;
 
