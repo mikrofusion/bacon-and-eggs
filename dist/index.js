@@ -62,7 +62,6 @@ exports.toRepeatedEventStream = function() {
   interval = new Bacon.Bus();
   repeatedQuery = function(frequency) {
     return interval.flatMap(function(i) {
-      console.log('here---');
       return Bacon.fromCallback(function(i, callback) {
         return setTimeout(function() {
           var f;
