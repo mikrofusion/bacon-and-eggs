@@ -56,6 +56,35 @@ exports.toRateLimitedEventStream = function() {
   });
 };
 
+exports.toRepeatedEventStream = function() {
+  var args, creds, frequencyInMs, interval, repeatedQuery, result;
+  frequencyInMs = arguments[0], creds = arguments[1], args = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
+  interval = new Bacon.Bus();
+  repeatedQuery = function(frequency) {
+    return interval.flatMap(function(i) {
+      console.log('here---');
+      return Bacon.fromCallback(function(i, callback) {
+        return setTimeout(function() {
+          var f;
+          f = exports.toRateLimitedEventStream.apply(exports, [creds].concat(__slice.call(args)));
+          f.onValue(function(val) {
+            interval.push(frequency);
+            return callback(val);
+          });
+          return f.onError(function(error) {
+            interval.push(error.reset);
+            return callback(null);
+          });
+        }, i);
+      }, i);
+    });
+  };
+  result = repeatedQuery(frequencyInMs);
+  result.onValue(function() {});
+  interval.push(0);
+  return result;
+};
+
 request = function(method, resource, params) {
   return {
     url: "https://api.twitter.com/1.1/" + resource + ".json",

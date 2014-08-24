@@ -9,26 +9,10 @@ BaconAndEggs = require('../dist/index.js')
 Bacon = require 'baconjs'
 creds = require('./helper.coffee').creds
 
-interval = new Bacon.Bus()
-
-getFollowers = (frequency) ->
-  interval.flatMap (i) ->
-    Bacon.fromCallback (i, callback) ->
-      setTimeout ->
-        f = BaconAndEggs.toRateLimitedEventStream(
-          creds,
-          'get',
-          'search/tweets',
-          { q: 'funny' }
-        )
-        f.onValue (val) ->
-          interval.push frequency
-          callback(val)
-        f.onError (error) ->
-          interval.push error.reset
-          callback(null)
-      , i
-    , i
-
-getFollowers(10000).log()
-interval.push(0)
+BaconAndEggs.toRepeatedEventStream(
+  5000,
+  creds,
+  'get',
+  'search/tweets',
+  { q: 'funny' }
+).log()

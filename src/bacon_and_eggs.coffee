@@ -49,6 +49,28 @@ exports.toRateLimitedEventStream = (creds, args...) ->
         reset: msToNextTry
       )
 
+exports.toRepeatedEventStream = (frequencyInMs, creds, args...) ->
+  interval = new Bacon.Bus()
+
+  repeatedQuery = (frequency) ->
+    interval.flatMap (i) ->
+      Bacon.fromCallback (i, callback) ->
+        setTimeout ->
+          f = exports.toRateLimitedEventStream creds, args...
+          f.onValue (val) ->
+            interval.push frequency
+            callback(val)
+          f.onError (error) ->
+            interval.push error.reset
+            callback(null)
+        , i
+      , i
+
+  result = repeatedQuery frequencyInMs
+  result.onValue ->
+  interval.push(0)
+  result
+
 
 # REST API:  https://dev.twitter.com/docs/api/1.1
 request = (method, resource, params) ->
