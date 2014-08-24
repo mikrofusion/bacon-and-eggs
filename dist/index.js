@@ -49,7 +49,7 @@ exports.toRateLimitedEventStream = function() {
       msMax = Math.max(msToNextTryRateLimit, msToNextTryResource);
       msToNextTry = msMax - new Date().getTime();
       return new Bacon.Error({
-        message: "rate limit reached, must wait " + msToNextTry + "ms",
+        message: 'rate limit reached',
         reset: msToNextTry
       });
     }
