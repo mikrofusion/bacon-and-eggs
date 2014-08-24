@@ -73,7 +73,7 @@ exports.toLoopingEventStream = (frequencyInMs, creds, args...) ->
   result = repeatedQuery frequencyInMs
   result.onValue ->
   interval.push(0)
-  result
+  result.filter (x) -> x?
 
 
 # REST API:  https://dev.twitter.com/docs/api/1.1

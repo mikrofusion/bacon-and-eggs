@@ -88,7 +88,9 @@ exports.toLoopingEventStream = function() {
   result = repeatedQuery(frequencyInMs);
   result.onValue(function() {});
   interval.push(0);
-  return result;
+  return result.filter(function(x) {
+    return x != null;
+  });
 };
 
 request = function(method, resource, params) {
