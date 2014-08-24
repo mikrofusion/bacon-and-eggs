@@ -30,7 +30,11 @@ exports.toRateLimitedEventStream = (creds, args...) ->
     [ method, resource, params ] = args # TODO make sure not streaming api
 
     resourceId = resource.split('/')[0]
-    resourceLimit = limits.resources[resourceId]["/#{resource}"]
+
+    if limits.resources[resourceId]?["/#{resource}"]?
+      resourceLimit = limits.resources[resourceId]["/#{resource}"]
+    else
+      resourceLimit = { remaining: 9999, reset: new Date().getTime() }
 
     if rateLimit.remaining > 0 && resourceLimit.remaining > 0
       exports.toEventStream(creds, args...)
@@ -49,7 +53,7 @@ exports.toRateLimitedEventStream = (creds, args...) ->
         reset: msToNextTry
       )
 
-exports.toRepeatedEventStream = (frequencyInMs, creds, args...) ->
+exports.toLoopingEventStream = (frequencyInMs, creds, args...) ->
   interval = new Bacon.Bus()
 
   repeatedQuery = (frequency) ->

@@ -9,7 +9,7 @@ BaconAndEggs = require('../dist/index.js')
 Bacon = require 'baconjs'
 creds = require('./helper.coffee').creds
 
-BaconAndEggs.toRepeatedEventStream(
+BaconAndEggs.toLoopingEventStream(
   5000,
   creds,
   'get',

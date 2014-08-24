@@ -36,11 +36,18 @@ exports.toRateLimitedEventStream = function() {
   creds = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
   rateLimitResource = exports.toEventStream(creds, 'get', 'application/rate_limit_status');
   return rateLimitResource.flatMap(function(limits) {
-    var method, msMax, msToNextTry, msToNextTryRateLimit, msToNextTryResource, params, rateLimit, resource, resourceId, resourceLimit;
+    var method, msMax, msToNextTry, msToNextTryRateLimit, msToNextTryResource, params, rateLimit, resource, resourceId, resourceLimit, _ref;
     rateLimit = limits.resources.application["/application/rate_limit_status"];
     method = args[0], resource = args[1], params = args[2];
     resourceId = resource.split('/')[0];
-    resourceLimit = limits.resources[resourceId]["/" + resource];
+    if (((_ref = limits.resources[resourceId]) != null ? _ref["/" + resource] : void 0) != null) {
+      resourceLimit = limits.resources[resourceId]["/" + resource];
+    } else {
+      resourceLimit = {
+        remaining: 9999,
+        reset: new Date().getTime()
+      };
+    }
     if (rateLimit.remaining > 0 && resourceLimit.remaining > 0) {
       return exports.toEventStream.apply(exports, [creds].concat(__slice.call(args)));
     } else {
@@ -56,7 +63,7 @@ exports.toRateLimitedEventStream = function() {
   });
 };
 
-exports.toRepeatedEventStream = function() {
+exports.toLoopingEventStream = function() {
   var args, creds, frequencyInMs, interval, repeatedQuery, result;
   frequencyInMs = arguments[0], creds = arguments[1], args = 3 <= arguments.length ? __slice.call(arguments, 2) : [];
   interval = new Bacon.Bus();
