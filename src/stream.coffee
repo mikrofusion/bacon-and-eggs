@@ -1,4 +1,5 @@
 Bacon = require 'baconjs'
+exports.Bacon = Bacon
 
 CARRIAGE_RETURN = '\r\n'
 

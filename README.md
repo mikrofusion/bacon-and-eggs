@@ -30,6 +30,10 @@ stream = BaconAndEggs.toEventStream(creds, request)
 stream.log()
 ```
 ## API
+### Bacon
+#####Description:
+The ```baconjs``` library used by BaconAndEggs.  It is highly recommended that you use this rather than require your own version of ```baconjs``` to avoid conflicts.
+
 ### toEventStream(creds, method, resource, params)
 #####Description:
 Returns a [bacon.js](http://baconjs.github.io/) EventStream containing JSON responses from the [Twitter REST API](https://dev.twitter.com/docs/api/1.1).

@@ -6,7 +6,6 @@
 # word 'funny' unless the rate limit for that query has been reached
 
 BaconAndEggs = require('../dist/index.js')
-Bacon = require 'baconjs'
 creds = require('./helper.coffee').creds
 
 BaconAndEggs.toLoopingEventStream(
