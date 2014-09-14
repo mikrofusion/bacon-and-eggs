@@ -201,6 +201,8 @@ var Bacon, CARRIAGE_RETURN, bufferToStr, containsCarriageReturn, isValidJSON, st
 
 Bacon = require('baconjs');
 
+exports.Bacon = Bacon;
+
 CARRIAGE_RETURN = '\r\n';
 
 containsCarriageReturn = function(str) {
