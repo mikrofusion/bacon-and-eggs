@@ -4,11 +4,10 @@
   "author": "Mike Groseclose",
   "email": "mike.groseclose@gmail.com",
   "description": "A functional reactive Twitter API client in node",
-  "homepage": "http://github.com/mikegroseclose/bacon-and-eggs",
+  "homepage": "http://github.com/mikrofusion/bacon-and-eggs",
   "author": {
     "name": "Mike Groseclose",
     "email": "mike.groseclose@gmail.com",
-    "url": "http://mikegroseclose.com"
   },
   "keywords": [
     "twitter",
@@ -25,7 +24,7 @@
   "main": "dist/index.js",
   "repository": {
     "type": "git",
-    "url": "git://github.com/mikegroseclose/bacon-and-eggs.git"
+    "url": "git://github.com/mikrofusion/bacon-and-eggs.git"
   },
   "scripts": {
     "test": "./runtests",
@@ -53,6 +52,6 @@
   },
   "licenses": [{
     "type": "MIT",
-    "url": "http://github.com/mikegroseclose/bacon-and-eggs/raw/master/LICENSE"
+    "url": "http://github.com/mikrofusion/bacon-and-eggs/raw/master/LICENSE"
   }]
 }

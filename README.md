@@ -124,5 +124,5 @@ TWITTER_USER_TOKEN_SECRET=YOUR-USER-TOKEN-SECRET-HERE
 [npm-url]: https://npmjs.org/package/bacon-and-eggs
 [npm-image]: https://badge.fury.io/js/bacon-and-eggs.png
 
-[travis-url]: http://travis-ci.org/mikegroseclose/bacon-and-eggs
-[travis-image]: https://secure.travis-ci.org/mikegroseclose/bacon-and-eggs.png?branch=master
+[travis-url]: http://travis-ci.org/mikrofusion/bacon-and-eggs
+[travis-image]: https://secure.travis-ci.org/mikrofusion/bacon-and-eggs.png?branch=master
